@@ -1,0 +1,28 @@
+/* Navbar */
+
+.navbar-header {
+	float: left;
+}
+
+.nav {
+	float: right;
+}
+
+.nav li {
+	display: inline-block;
+}
+
+/* Post Header */
+
+.post-name {
+	font-size: 20px;
+	margin-left: 10px;
+}
+
+.post-form {
+	margin-top: 30px;
+}
+
+.glyphicon-thumbs-up, .glyphicon-thumbs-down {
+	cursor: pointer;
+}

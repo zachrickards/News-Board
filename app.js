@@ -9,13 +9,14 @@ var app = express();
 
 var mongoose = require('mongoose');
 var passport = require('passport');
+var bcrypt = require('bcryptjs');
+var nev = require('email-verification')(mongoose);
 
 require('./models/Posts');
 require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/news');
 
 var index = require('./routes/index');

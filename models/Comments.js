@@ -4,11 +4,20 @@ var CommentSchema = new mongoose.Schema({
 	body: String,
 	author: String,
 	upvotes: {type: Number, default: 0},
-	post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
+	downvotes: {type: Number, default: 0},
+	post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
+	createdDate: {type: Date, default: Date.now},
+	updatedDate: {type: Date, default: Date.now}
 });
 
-CommentSchema.methods.upvote = function(cb) {
+CommentSchema.methods.upvote = function (cb) {
+	console.log('here');
 	this.upvotes += 1;
+	this.save(cb);
+};
+
+CommentSchema.methods.downvote = function (cb) {
+	this.downvotes += 1;
 	this.save(cb);
 };
 
