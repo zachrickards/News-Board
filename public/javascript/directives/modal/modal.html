@@ -1,0 +1,22 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		  	<div class="modal-header">
+		    	<h3 class="modal-title">{{modalTitle}}</h3>
+			    <button ng-click="closeModal()" type="button" class="close">
+			    	<span>&times;</span>
+			    </button>
+		  	</div>
+		  	<div class="modal-body">{{modalMessage}}</div>
+			<div class="modal-footer">
+				<div ng-show="modalType === 'okay'">
+					<button ng-click="closeModal()" type="button" class="btn btn-primary">Okay</button>
+				</div>
+				<div ng-show="modalType === 'switch'">
+					<button ng-click="closeModal()" type="button" class="btn btn-secondary">Cancel</button>
+					<button ng-click="switchVote()" type="button" class="btn btn-primary">Switch</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

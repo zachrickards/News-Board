@@ -4,7 +4,7 @@
 	<span class="glyphicon glyphicon-thumbs-down" ng-click="downVote(post)"></span>
 	{{post.downvotes}}
 	<span ng-show="post.author">
-		posted by <a>{{post.author}}</a>
+		posted by {{post.author}}
 	</span>
 	<span class="post-name">
 		<a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
@@ -27,3 +27,4 @@
 <div ng-hide="isLoggedIn()">
 	<h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a></h3>
 </div>
+<news-board-modal></news-board-modal>

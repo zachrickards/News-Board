@@ -19,9 +19,26 @@ PostSchema.methods.upvote = function (cb, user) {
 	this.save(cb);
 };
 
-PostSchema.methods.downvote = function (cb) {
+PostSchema.methods.removeUpvote = function (cb, user) {
+	var index = this.upvotedBy.indexOf(user);
+
+	this.upvotedBy.splice(index, 1);
+	this.upvotes -= 1;
+	this.save(cb);
+}
+
+PostSchema.methods.downvote = function (cb, user) {
+	this.downvotedBy.push(user);
 	this.downvotes += 1;
 	this.save(cb);
 };
+
+PostSchema.methods.removeDownvote = function (cb, user) {
+	var index = this.downvotedBy.indexOf(user);
+
+	this.downvotedBy.splice(index, 1);
+	this.downvotes -= 1;
+	this.save(cb);
+}
 
 mongoose.model('Post', PostSchema);

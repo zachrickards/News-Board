@@ -38,13 +38,32 @@ app.factory('posts', ['$http', 'auth', function ($http, auth) {
 		});
 	};
 
+	postObj.removeUpvote = function (post) {
+		return $http.put('/posts/' + post._id + '/removeUpvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function (data) {
+			post.upvotedBy = data.upvotedBy;
+			post.upvotes -= 1;
+		});
+	};
+
 	postObj.downvote = function (post) {
 		return $http.put('/posts/' + post._id + '/downvote', null, {
 			headers: {Authorization: 'Bearer ' + auth.getToken()}
 		}).success(function (data) {
+			post.downvotedBy = data.downvotedBy;
 			post.downvotes += 1;
 		});
 	};
+
+	postObj.removeDownvote = function (post) {
+		return $http.put('/posts/' + post._id + '/removeDownvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function (data) {
+			post.downvotedBy = data.downvotedBy;
+			post.downvotes -= 1;
+		})
+	}
 
 	postObj.addComment = function (id, comment) {
 		return $http.post('/posts/' + id + '/comments', comment, {

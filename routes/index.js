@@ -102,6 +102,17 @@ router.put('/posts/:post/upvote', auth, function (req, res, next) {
   	}, req.payload.username);
 });
 
+// Update a post w/ remove upvote
+router.put('/posts/:post/removeUpvote', auth, function (req, res, next) {
+	req.post.removeUpvote(function (err, post) {
+		if (err) {
+			return next(err);
+		}
+
+		res.json(post);
+	}, req.payload.username);
+});
+
 // Update a post w/ downvote
 router.put('/posts/:post/downvote', auth, function (req, res, next) {
 	req.post.downvote(function (err, post) {
@@ -110,7 +121,18 @@ router.put('/posts/:post/downvote', auth, function (req, res, next) {
 		}
 
 		res.json(post);
-	});
+	}, req.payload.username);
+});
+
+// Update a post w/ remove downvote
+router.put('/posts/:post/removeDownvote', auth, function (req, res, next) {
+	req.post.removeDownvote(function (err, post) {
+		if (err) {
+			return next(err);
+		}
+
+		res.json(post);
+	}, req.payload.username);
 });
 
 // Create a new comment

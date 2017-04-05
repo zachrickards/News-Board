@@ -26,3 +26,24 @@
 .glyphicon-thumbs-up, .glyphicon-thumbs-down {
 	cursor: pointer;
 }
+
+/* Modal */
+
+.fade.show {
+	opacity: 1;
+}
+
+.modal {
+	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	overflow: visible;
+}
+
+.modal-title {
+	display: inline-block;
+}
+
+.modal-body {
+	min-height: 150px;
+}
