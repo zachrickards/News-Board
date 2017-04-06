@@ -1,4 +1,4 @@
-var posts = angular.module('newsBoard.posts', ['ui.router']);
+var posts = angular.module('newsBoard.posts', ['ui.router', 'newsBoard.modal']);
 
 posts.config(['$stateProvider', '$urlRouterProvider',
 	function ($stateProvider, $urlRouteProvider) {
@@ -18,7 +18,7 @@ posts.config(['$stateProvider', '$urlRouterProvider',
 posts.controller('PostsCtrl', ['$scope', '$rootScope', 'auth', 'posts', 'post',
 	function ($scope, $rootScope, auth, posts, post) {
 		$rootScope.header = "Angular News Board";
-		
+
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.post = post;
 
@@ -38,11 +38,58 @@ posts.controller('PostsCtrl', ['$scope', '$rootScope', 'auth', 'posts', 'post',
 		};
 
 		$scope.upvoteComment = function (comment) {
-			posts.upvoteComment(post, comment);
+			checkUserVotes(post, comment, 'upvote');
 		};
 
 		$scope.downvoteComment = function (comment) {
-			posts.downvoteComment(post, comment);
+			checkUserVotes(post, comment, 'downvote');
+		};
+
+		function checkUserVotes (post, comment, voteType) {
+			$scope.comment = comment;
+
+			if (comment.upvotedBy.indexOf(auth.currentUser()) === -1 && comment.downvotedBy.indexOf(auth.currentUser()) === -1) {
+				if (voteType === 'upvote') {
+					posts.upvoteComment(post, comment);
+				} else if (voteType === 'downvote') {
+					posts.downvoteComment(post, comment);
+				}
+			} else if (comment.upvotedBy.indexOf(auth.currentUser()) >= 0) {
+				showModal(voteType, 'upvote');
+			} else if (comment.downvotedBy.indexOf(auth.currentUser()) >= 0) {
+				showModal(voteType, 'downvote');
+			} 
+		}
+
+		function showModal (voteType, prevVote) {
+			if (voteType === prevVote) {
+				$scope.modalTitle = 'Already Upvoted or Downvoted';
+				$scope.modalMessage = 'You can only upvote or downvote a comment once. ' +
+									  'If you would like to switch your vote, ' +
+									  'you may do so by clicking the opposite thumb.';
+				$scope.modalType = 'okay';
+				$scope.voteType = voteType;
+			} else {
+				$scope.modalTitle = 'Switch Vote';
+				$scope.modalMessage = 'You have already upvoted or downvoted this comment. ' +
+									  'Would you like to switch your vote from your previous?';
+				$scope.modalType = 'switch';
+				$scope.voteType = voteType;
+			}
+
+			angular.element(document.querySelector('#myModal')).addClass('show');
+		}
+		
+		$scope.switchVote = function () {
+			if ($scope.voteType === 'upvote') {
+				posts.removeCommentDownvote(post, $scope.comment);
+				posts.upvoteComment(post, $scope.comment);
+			} else if ($scope.voteType === 'downvote') {
+				posts.removeCommentUpvote(post, $scope.comment);
+				posts.downvoteComment(post, $scope.comment);
+			}
+
+			angular.element(document.querySelector('#myModal')).removeClass('show');
 		};
 	}
 ]);

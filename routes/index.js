@@ -166,10 +166,21 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function (req, res, ne
 		}
 
 		res.json(comment);
-	});
+	}, req.payload.username);
 });
 
-// Update a commet w/ downvote
+// Update a comment w/ remove upvote
+router.put('/posts/:post/comments/:comment/removeUpvote', auth, function (req, res, next) {
+	req.comment.removeUpvote(function (err, comment) {
+		if (err) {
+			return next(err);
+		}
+
+		res.json(comment);
+	}, req.payload.username)
+});
+
+// Update a comment w/ downvote
 router.put('/posts/:post/comments/:comment/downvote', auth, function (req, res, next) {
 	req.comment.downvote(function (err, comment) {
 		if (err) {
@@ -177,7 +188,18 @@ router.put('/posts/:post/comments/:comment/downvote', auth, function (req, res, 
 		}
 
 		res.json(comment);
-	});
+	}, req.payload.username);
+});
+
+// Update a comment w/ remove downvote
+router.put('/posts/:post/comments/:comment/removeDownvote', auth, function (req, res, next) {
+	req.comment.removeDownvote(function (err, comment) {
+		if (err) {
+			return next(err);
+		}
+
+		res.json(comment);
+	}, req.payload.username);
 });
 
 // Register as a user

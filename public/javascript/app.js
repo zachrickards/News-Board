@@ -75,7 +75,17 @@ app.factory('posts', ['$http', 'auth', function ($http, auth) {
 		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
 			headers: {Authorization: 'Bearer ' + auth.getToken()}
 		}).success(function (data) {
+			comment.upvotedBy = data.upvotedBy;
 			comment.upvotes += 1;
+		});
+	};
+
+	postObj.removeCommentUpvote = function (post, comment) {
+		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/removeUpvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function (data) {
+			comment.upvotedBy = data.upvotedBy;
+			comment.upvotes -= 1;
 		});
 	};
 
@@ -83,7 +93,17 @@ app.factory('posts', ['$http', 'auth', function ($http, auth) {
 		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/downvote', null, {
 			headers: {Authorization: 'Bearer ' + auth.getToken()}
 		}).success(function (data) {
+			comment.downvotedBy = data.downvotedBy;
 			comment.downvotes += 1;
+		});
+	};
+
+	postObj.removeCommentDownvote = function (post, comment) {
+		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/removeDownvote', null, {
+			headers: {Authorization: 'Bearer ' + auth.getToken()}
+		}).success(function (data) {
+			comment.downvotedBy = data.downvotedBy;
+			comment.downvotes -= 1;
 		});
 	};
 

@@ -21,7 +21,6 @@ main.controller('MainCtrl', ['$scope', '$rootScope', 'auth', 'posts',
 
 		$scope.isLoggedIn = auth.isLoggedIn;
   		$scope.posts = posts.posts;
-  		$scope.postsDef = posts;
 
 		$scope.addPost = function () {
 			if ($scope.title === '' || !$scope.title) {
@@ -80,17 +79,13 @@ main.controller('MainCtrl', ['$scope', '$rootScope', 'auth', 'posts',
 			angular.element(document.querySelector('#myModal')).addClass('show');
 		}
 
-		$scope.closeModal = function () {
-			angular.element(document.querySelector('#myModal')).removeClass('show')
-		};
-
 		$scope.switchVote = function () {
 			if ($scope.voteType === 'upvote') {
-				$scope.postsDef.removeDownvote($scope.post);
-				$scope.postsDef.upvote($scope.post);
+				posts.removeDownvote($scope.post);
+				posts.upvote($scope.post);
 			} else if ($scope.voteType === 'downvote') {
-				$scope.postsDef.removeUpvote($scope.post);
-				$scope.postsDef.downvote($scope.post);
+				posts.removeUpvote($scope.post);
+				posts.downvote($scope.post);
 			}
 
 			angular.element(document.querySelector('#myModal')).removeClass('show');

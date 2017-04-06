@@ -8,5 +8,7 @@ app.directive('newsBoardModal', function() {
 });
 
 function newsBoardModal ($scope, $element, $attr) {
-	
+	$scope.closeModal = function () {
+		angular.element(document.querySelector('#myModal')).removeClass('show')
+	};
 } 
