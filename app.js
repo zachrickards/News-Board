@@ -58,6 +58,6 @@ app.use(function(err, req, res, next) {
 });
 
 var port = process.env.PORT || CONFIG.port;
-app.list(port);
+app.listen(port);
 
 module.exports = app;
