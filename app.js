@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var multer = require('multer');
 
 var app = express();
 
@@ -19,7 +18,7 @@ require('./models/Comments');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://newsboard:newsboard@ds157980.mlab.com:57980/heroku_rzlj4fj1');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
