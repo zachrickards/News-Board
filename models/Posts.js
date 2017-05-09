@@ -14,6 +14,7 @@ var PostSchema = new mongoose.Schema({
 });
 
 PostSchema.methods.upvote = function (cb, user) {
+	this.updatedDate = Date.now();
 	this.upvotedBy.push(user);
 	this.upvotes += 1;
 	this.save(cb);
@@ -22,12 +23,14 @@ PostSchema.methods.upvote = function (cb, user) {
 PostSchema.methods.removeUpvote = function (cb, user) {
 	var index = this.upvotedBy.indexOf(user);
 
+	this.updatedDate = Date.now();
 	this.upvotedBy.splice(index, 1);
 	this.upvotes -= 1;
 	this.save(cb);
 }
 
 PostSchema.methods.downvote = function (cb, user) {
+	this.updatedDate = Date.now();
 	this.downvotedBy.push(user);
 	this.downvotes += 1;
 	this.save(cb);
@@ -36,6 +39,7 @@ PostSchema.methods.downvote = function (cb, user) {
 PostSchema.methods.removeDownvote = function (cb, user) {
 	var index = this.downvotedBy.indexOf(user);
 
+	this.updatedDate = Date.now();
 	this.downvotedBy.splice(index, 1);
 	this.downvotes -= 1;
 	this.save(cb);

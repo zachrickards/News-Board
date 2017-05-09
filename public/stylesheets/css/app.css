@@ -12,6 +12,10 @@
 	display: inline-block;
 }
 
+body .navbar {
+	border-radius: 0;
+}
+
 /* Post Header */
 
 .post-name {
